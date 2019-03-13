@@ -1,76 +1,89 @@
 # Forms & HTML
 
-- [Opening A Form](#opening-a-form)
-- [CSRF Protection](#csrf-protection)
-- [Form Model Binding](#form-model-binding)
-- [Labels](#labels)
-- [Text, Text Area, Password & Hidden Fields](#text)
-- [Checkboxes and Radio Buttons](#checkboxes-and-radio-buttons)
-- [File Input](#file-input)
-- [Drop-Down Lists](#drop-down-lists)
-- [Buttons](#buttons)
-- [Custom Macros](#custom-macros)
-- [Generating URLs](#generating-urls)
+* [Opening A Form](html.md#opening-a-form)
+* [CSRF Protection](html.md#csrf-protection)
+* [Form Model Binding](html.md#form-model-binding)
+* [Labels](html.md#labels)
+* [Text, Text Area, Password & Hidden Fields](html.md#text)
+* [Checkboxes and Radio Buttons](html.md#checkboxes-and-radio-buttons)
+* [File Input](html.md#file-input)
+* [Drop-Down Lists](html.md#drop-down-lists)
+* [Buttons](html.md#buttons)
+* [Custom Macros](html.md#custom-macros)
+* [Generating URLs](html.md#generating-urls)
 
-<a name="opening-a-form"></a>
 ## Opening A Form
 
-#### Opening A Form
+### Opening A Form
 
-	{{ Form::open(array('url' => 'foo/bar')) }}
-		//
-	{{ Form::close() }}
+```text
+{{ Form::open(array('url' => 'foo/bar')) }}
+    //
+{{ Form::close() }}
+```
 
 By default, a `POST` method will be assumed; however, you are free to specify another method:
 
-	echo Form::open(array('url' => 'foo/bar', 'method' => 'put'))
+```text
+echo Form::open(array('url' => 'foo/bar', 'method' => 'put'))
+```
 
 > **Note:** Since HTML forms only support `POST` and `GET`, `PUT` and `DELETE` methods will be spoofed by automatically adding a `_method` hidden field to your form.
 
 You may also open forms that point to named routes or controller actions:
 
-	echo Form::open(array('route' => 'route.name'))
+```text
+echo Form::open(array('route' => 'route.name'))
 
-	echo Form::open(array('action' => 'Controller@method'))
+echo Form::open(array('action' => 'Controller@method'))
+```
 
 You may pass in route parameters as well:
 
-	echo Form::open(array('route' => array('route.name', $user->id)))
+```text
+echo Form::open(array('route' => array('route.name', $user->id)))
 
-	echo Form::open(array('action' => array('Controller@method', $user->id)))
+echo Form::open(array('action' => array('Controller@method', $user->id)))
+```
 
 If your form is going to accept file uploads, add a `files` option to your array:
 
-	echo Form::open(array('url' => 'foo/bar', 'files' => true))
+```text
+echo Form::open(array('url' => 'foo/bar', 'files' => true))
+```
 
-<a name="csrf-protection"></a>
 ## CSRF Protection
 
-#### Adding The CSRF Token To A Form
+### Adding The CSRF Token To A Form
 
 Laravel provides an easy method of protecting your application from cross-site request forgeries. First, a random token is placed in your user's session. Don't sweat it, this is done automatically. The CSRF token will be added to your forms as a hidden field automatically. However, if you wish to generate the HTML for the hidden field, you may use the `token` method:
 
-	echo Form::token();
+```text
+echo Form::token();
+```
 
-#### Attaching The CSRF Filter To A Route
+### Attaching The CSRF Filter To A Route
 
-	Route::post('profile', array('before' => 'csrf', function()
-	{
-		//
-	}));
+```text
+Route::post('profile', array('before' => 'csrf', function()
+{
+    //
+}));
+```
 
-<a name="form-model-binding"></a>
 ## Form Model Binding
 
-#### Opening A Model Form
+### Opening A Model Form
 
 Often, you will want to populate a form based on the contents of a model. To do so, use the `Form::model` method:
 
-	echo Form::model($user, array('route' => array('user.update', $user->id)))
+```text
+echo Form::model($user, array('route' => array('user.update', $user->id)))
+```
 
 Now, when you generate a form element, like a text input, the model's value matching the field's name will automatically be set as the field value. So, for example, for a text input named `email`, the user model's `email` attribute would be set as the value. However, there's more! If there is an item in the Session flash data matching the input name, that will take precedence over the model's value. So, the priority looks like this:
 
-1. Session Flash Data (Old Input)
+1. Session Flash Data \(Old Input\)
 2. Explicitly Passed Value
 3. Model Attribute Data
 
@@ -78,120 +91,146 @@ This allows you to quickly build forms that not only bind to model values, but e
 
 > **Note:** When using `Form::model`, be sure to close your form with `Form::close`!
 
-<a name="labels"></a>
 ## Labels
 
-#### Generating A Label Element
+### Generating A Label Element
 
-	echo Form::label('email', 'E-Mail Address');
+```text
+echo Form::label('email', 'E-Mail Address');
+```
 
-#### Specifying Extra HTML Attributes
+### Specifying Extra HTML Attributes
 
-	echo Form::label('email', 'E-Mail Address', array('class' => 'awesome'));
+```text
+echo Form::label('email', 'E-Mail Address', array('class' => 'awesome'));
+```
 
 > **Note:** After creating a label, any form element you create with a name matching the label name will automatically receive an ID matching the label name as well.
 
-<a name="text"></a>
 ## Text, Text Area, Password & Hidden Fields
 
-#### Generating A Text Input
+### Generating A Text Input
 
-	echo Form::text('username');
+```text
+echo Form::text('username');
+```
 
-#### Specifying A Default Value
+### Specifying A Default Value
 
-	echo Form::text('email', 'example@gmail.com');
+```text
+echo Form::text('email', 'example@gmail.com');
+```
 
-> **Note:** The *hidden* and *textarea* methods have the same signature as the *text* method.
+> **Note:** The _hidden_ and _textarea_ methods have the same signature as the _text_ method.
 
-#### Generating A Password Input
+### Generating A Password Input
 
-	echo Form::password('password');
+```text
+echo Form::password('password');
+```
 
-#### Generating Other Inputs
+### Generating Other Inputs
 
-	echo Form::email($name, $value = null, $attributes = array());
-	echo Form::file($name, $attributes = array());
+```text
+echo Form::email($name, $value = null, $attributes = array());
+echo Form::file($name, $attributes = array());
+```
 
-<a name="checkboxes-and-radio-buttons"></a>
 ## Checkboxes and Radio Buttons
 
-#### Generating A Checkbox Or Radio Input
+### Generating A Checkbox Or Radio Input
 
-	echo Form::checkbox('name', 'value');
+```text
+echo Form::checkbox('name', 'value');
 
-	echo Form::radio('name', 'value');
+echo Form::radio('name', 'value');
+```
 
-#### Generating A Checkbox Or Radio Input That Is Checked
+### Generating A Checkbox Or Radio Input That Is Checked
 
-	echo Form::checkbox('name', 'value', true);
+```text
+echo Form::checkbox('name', 'value', true);
 
-	echo Form::radio('name', 'value', true);
+echo Form::radio('name', 'value', true);
+```
 
-<a name="file-input"></a>
 ## File Input
 
-#### Generating A File Input
+### Generating A File Input
 
-	echo Form::file('image');
+```text
+echo Form::file('image');
+```
 
 > **Note:** The form must have been opened with the `files` option set to `true`.
 
-<a name="drop-down-lists"></a>
 ## Drop-Down Lists
 
-#### Generating A Drop-Down List
+### Generating A Drop-Down List
 
-	echo Form::select('size', array('L' => 'Large', 'S' => 'Small'));
+```text
+echo Form::select('size', array('L' => 'Large', 'S' => 'Small'));
+```
 
-#### Generating A Drop-Down List With Selected Default
+### Generating A Drop-Down List With Selected Default
 
-	echo Form::select('size', array('L' => 'Large', 'S' => 'Small'), 'S');
+```text
+echo Form::select('size', array('L' => 'Large', 'S' => 'Small'), 'S');
+```
 
-#### Generating A Grouped List
+### Generating A Grouped List
 
-	echo Form::select('animal', array(
-		'Cats' => array('leopard' => 'Leopard'),
-		'Dogs' => array('spaniel' => 'Spaniel'),
-	));
+```text
+echo Form::select('animal', array(
+    'Cats' => array('leopard' => 'Leopard'),
+    'Dogs' => array('spaniel' => 'Spaniel'),
+));
+```
 
-#### Generating A Drop-Down List With A Range
+### Generating A Drop-Down List With A Range
 
-    echo Form::selectRange('number', 10, 20);
+```text
+echo Form::selectRange('number', 10, 20);
+```
 
-#### Generating A List With Month Names
+### Generating A List With Month Names
 
-    echo Form::selectMonth('month');
+```text
+echo Form::selectMonth('month');
+```
 
-<a name="buttons"></a>
 ## Buttons
 
-#### Generating A Submit Button
+### Generating A Submit Button
 
-	echo Form::submit('Click Me!');
+```text
+echo Form::submit('Click Me!');
+```
 
-> **Note:** Need to create a button element? Try the *button* method. It has the same signature as *submit*.
+> **Note:** Need to create a button element? Try the _button_ method. It has the same signature as _submit_.
 
-<a name="custom-macros"></a>
 ## Custom Macros
 
-#### Registering A Form Macro
+### Registering A Form Macro
 
 It's easy to define your own custom Form class helpers called "macros". Here's how it works. First, simply register the macro with a given name and a Closure:
 
-	Form::macro('myField', function()
-	{
-		return '<input type="awesome">';
-	});
+```text
+Form::macro('myField', function()
+{
+    return '<input type="awesome">';
+});
+```
 
 Now you can call your macro using its name:
 
-#### Calling A Custom Form Macro
+### Calling A Custom Form Macro
 
-	echo Form::myField();
+```text
+echo Form::myField();
+```
 
+## Generating URLs
 
-<a name="generating-urls"></a>
-##Generating URLs
+For more information on generating URL's, check out the documentation on [helpers](https://github.com/bryantyan/laravel4.2docs/tree/f12ffb53f9f16c3968c58e9dd508247dc98deb70/docs/helpers/README.md#urls).
 
-For more information on generating URL's, check out the documentation on [helpers](/docs/helpers#urls).

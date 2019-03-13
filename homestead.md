@@ -1,12 +1,11 @@
 # Laravel Homestead
 
-- [Introduction](#introduction)
-- [Included Software](#included-software)
-- [Installation & Setup](#installation-and-setup)
-- [Daily Usage](#general-usage)
-- [Ports](#ports)
+* [Introduction](homestead.md#introduction)
+* [Included Software](homestead.md#included-software)
+* [Installation & Setup](homestead.md#installation-and-setup)
+* [Daily Usage](homestead.md#general-usage)
+* [Ports](homestead.md#ports)
 
-<a name="introduction"></a>
 ## Introduction
 
 Laravel strives to make the entire PHP development experience delightful, including your local development environment. [Vagrant](http://vagrantup.com) provides a simple, elegant way to manage and provision Virtual Machines.
@@ -15,22 +14,20 @@ Laravel Homestead is an official, pre-packaged Vagrant "box" that provides you a
 
 Homestead runs on any Windows, Mac, and Linux, and includes the Nginx web server, PHP 5.5, MySQL, Postgres, Redis, Memcached and all of the other goodies you need to develop amazing Laravel applications.
 
-<a name="included-software"></a>
 ## Included Software
 
-- Ubuntu 14.04
-- PHP 5.5
-- Nginx
-- MySQL
-- Postgres
-- Node (With Bower, Grunt, and Gulp)
-- Redis
-- Memcached
-- Beanstalkd
-- [Laravel Envoy](/docs/ssh#envoy-task-runner)
-- Fabric + HipChat Extension
+* Ubuntu 14.04
+* PHP 5.5
+* Nginx
+* MySQL
+* Postgres
+* Node \(With Bower, Grunt, and Gulp\)
+* Redis
+* Memcached
+* Beanstalkd
+* [Laravel Envoy](https://github.com/bryantyan/laravel4.2docs/tree/f12ffb53f9f16c3968c58e9dd508247dc98deb70/docs/ssh/README.md#envoy-task-runner)
+* Fabric + HipChat Extension
 
-<a name="installation-and-setup"></a>
 ## Installation & Setup
 
 ### Installing VirtualBox & Vagrant
@@ -41,13 +38,17 @@ Before launching your Homestead environment, you must install [VirtualBox](https
 
 Once VirtualBox and Vagrant have been installed, you should add the `laravel/homestead` box to your Vagrant installation using the following command in your terminal. It will take a few minutes to download the box, depending on your Internet connection speed:
 
-	vagrant box add laravel/homestead
+```text
+vagrant box add laravel/homestead
+```
 
 ### Clone The Homestead Repository
 
-Once the box has been added to your Vagrant installation, you should clone or download this repository. Consider cloning the repository into a central `Homestead` directory where you keep all of your Laravel projects, as the Homestead box will serve as the host to all of your Laravel (and PHP) projects.
+Once the box has been added to your Vagrant installation, you should clone or download this repository. Consider cloning the repository into a central `Homestead` directory where you keep all of your Laravel projects, as the Homestead box will serve as the host to all of your Laravel \(and PHP\) projects.
 
-	git clone https://github.com/laravel/homestead.git Homestead
+```text
+git clone https://github.com/laravel/homestead.git Homestead
+```
 
 ### Set Your SSH Key
 
@@ -55,7 +56,9 @@ Next, you should edit the `Homestead.yaml` file included in the repository. In t
 
 Don't have an SSH key? On Mac and Linux, you can generally create an SSH key pair using the following command:
 
-	ssh-keygen -t rsa -C "your@email.com"
+```text
+ssh-keygen -t rsa -C "your@email.com"
+```
 
 On Windows, you may install [Git](http://git-scm.com/) and use the `Git Bash` shell included with Git to issue the command above. Alternatively, you may use [PuTTY](http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html) and [PuTTYgen](http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html).
 
@@ -79,15 +82,18 @@ Once you have edited the `Homestead.yaml` to your liking, run the `vagrant up` c
 
 Don't forget to add the "domains" for your Nginx sites to the `hosts` file on your machine! The `hosts` file will redirect your requests for the local domains into your Homestead environment. On Mac and Linux, this file is located at `/etc/hosts`. On Windows, it is located at `C:\Windows\System32\drivers\etc\hosts`. The lines you add to this file will look like the following:
 
-	127.0.0.1  homestead.app
+```text
+127.0.0.1  homestead.app
+```
 
 Once you have added the domain to your `hosts` file, you can access the site via your web browser on port 8000!
 
-	http://homestead.app:8000
+```text
+http://homestead.app:8000
+```
 
 To learn how to connect to your databases, read on!
 
-<a name="daily-usage"></a>
 ## Daily Usage
 
 ### Connecting Via SSH
@@ -96,13 +102,15 @@ To connect to your Homestead environment via SSH, you should connect to `127.0.0
 
 If you want even more convenience, it can be helpful to add the following alias to your `~/.bash_aliases` or `~/.bash_profile`:
 
-	alias vm='ssh vagrant@127.0.0.1 -p 2222'
+```text
+alias vm='ssh vagrant@127.0.0.1 -p 2222'
+```
 
 ### Connecting To Your Databases
 
 A `homestead` database is configured for both MySQL and Postgres out of the box. For even more convenience, Laravel's `local` database configuration is set to use this database by default.
 
-To connect to your MySQL or Postgres database from your main machine via Navicat or Sequel Pro, you should connect to `127.0.0.1` and port 33060 (MySQL) or 54320 (Postgres). The username and password for both databases is `homestead` / `secret`.
+To connect to your MySQL or Postgres database from your main machine via Navicat or Sequel Pro, you should connect to `127.0.0.1` and port 33060 \(MySQL\) or 54320 \(Postgres\). The username and password for both databases is `homestead` / `secret`.
 
 > **Note:** You should only use these non-standard ports when connecting to the databases from your main machine. You will use the default 3306 and 5432 ports in your Laravel database configuration file since Laravel is running _within_ the Virtual Machine.
 
@@ -112,16 +120,18 @@ Once your Homestead environment is provisioned and running, you may want to add 
 
 Alternatively, you may use the `serve` script that is available on your Homestead environment. To use the `serve` script, SSH into your Homestead environment and run the following command:
 
-	serve domain.app /home/vagrant/Code/path/to/public/directory
+```text
+serve domain.app /home/vagrant/Code/path/to/public/directory
+```
 
 > **Note:** After running the `serve` command, do not forget to add the new site to the `hosts` file on your main machine!
 
-<a name="ports"></a>
 ## Ports
 
 The following ports are forwarded to your Homestead environment:
 
-- **SSH:** 2222 -> Forwards To 22
-- **HTTP:** 8000 -> Forwards To 80
-- **MySQL:** 33060 -> Forwards To 3306
-- **Postgres:** 54320 -> Forwards To 5432
+* **SSH:** 2222 -&gt; Forwards To 22
+* **HTTP:** 8000 -&gt; Forwards To 80
+* **MySQL:** 33060 -&gt; Forwards To 3306
+* **Postgres:** 54320 -&gt; Forwards To 5432
+

@@ -1,11 +1,10 @@
 # Upgrade Guide
 
-- [Upgrading To 4.2 From 4.1](#upgrade-4.2)
-- [Upgrading To 4.1.29 From <= 4.1.x](#upgrade-4.1.29)
-- [Upgrading To 4.1.26 From <= 4.1.25](#upgrade-4.1.26)
-- [Upgrading To 4.1 From 4.0](#upgrade-4.1)
+* [Upgrading To 4.2 From 4.1](upgrade.md#upgrade-4.2)
+* [Upgrading To 4.1.29 From &lt;= 4.1.x](upgrade.md#upgrade-4.1.29)
+* [Upgrading To 4.1.26 From &lt;= 4.1.25](upgrade.md#upgrade-4.1.26)
+* [Upgrading To 4.1 From 4.0](upgrade.md#upgrade-4.1)
 
-<a name="upgrade-4.2"></a>
 ## Upgrading To 4.2 From 4.1
 
 ### PHP 5.4+
@@ -16,7 +15,9 @@ Laravel 4.2 requires PHP 5.4.0 or greater.
 
 Add a new `cipher` option in your `app/config/app.php` configuration file. The value of this option shuold be `MCRYPT_RIJNDAEL_256`.
 
-	'cipher' => MCRYPT_RIJNDAEL_256
+```text
+'cipher' => MCRYPT_RIJNDAEL_256
+```
 
 This seting may be used to control the default cipher used by the Laravel envryption facilities.
 
@@ -24,19 +25,23 @@ This seting may be used to control the default cipher used by the Laravel envryp
 
 If you are using soft deleting models, the `softDeletes` property has been removed. You should now use the `SoftDeletingTrait` like so:
 
-	use Illuminate\Database\Eloquent\SoftDeletingTrait;
+```text
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
-	class User extends Eloquent {
-		use SoftDeletingTrait;
-	}
+class User extends Eloquent {
+    use SoftDeletingTrait;
+}
+```
 
 You should also manually add the `deleted_at` column to your `dates` property:
 
-	class User extends Eloquent {
-		use SoftDeletingTrait;
+```text
+class User extends Eloquent {
+    use SoftDeletingTrait;
 
-		protected $dates = ['deleted_at'];
-	}
+    protected $dates = ['deleted_at'];
+}
+```
 
 The API for all soft delete operations remains the same.
 
@@ -48,42 +53,44 @@ If you are directly referencing the `Illuminate\View\Environment` class or `Illu
 
 If you are extending the `Illuminate\Pagination\Presenter` class, the abstract method `getPageLinkWrapper` signature has changed to add the `rel` argument:
 
-	abstract public function getPageLinkWrapper($url, $page, $rel = null);
+```text
+abstract public function getPageLinkWrapper($url, $page, $rel = null);
+```
 
-<a name="upgrade-4.1.29"></a>
-## Upgrading To 4.1.29 From <= 4.1.x
+## Upgrading To 4.1.29 From &lt;= 4.1.x
 
 Laravel 4.1.29 improves the column quoting for all database drivers. This protects your application from some mass assignment vulnerabilities when **not** using the `fillable` property on models. If you are using the `fillable` property on your models to protect against mass assignemnt, your application is not vulerable. However, if you are using `guarded` and are passing a user controlled array into an "update" or "save" type function, you should upgrade to `4.1.29` immediately as your application may be at risk of mass assignment.
 
 To upgrade to Laravel 4.1.29, simply `composer update`. No breaking changes are introduced in this release.
 
-<a name="upgrade-4.1.26"></a>
-## Upgrading To 4.1.26 From <= 4.1.25
+## Upgrading To 4.1.26 From &lt;= 4.1.25
 
 Laravel 4.1.26 introduces security improvements for "remember me" cookies. Before this update, if a remember cookie was hijacked by another malicious user, the cookie would remain valid for a long period of time, even after the true owner of the account reset their password, logged out, etc.
 
-This change requires the addition of a new `remember_token` column to your `users` (or equivalent) database table. After this change, a fresh token will be assigned to the user each time they login to your application. The token will also be refreshed when the user logs out of the application. The implications of this change are: if a "remember me" cookie is hijacked, simply logging out of the application will invalidate the cookie.
+This change requires the addition of a new `remember_token` column to your `users` \(or equivalent\) database table. After this change, a fresh token will be assigned to the user each time they login to your application. The token will also be refreshed when the user logs out of the application. The implications of this change are: if a "remember me" cookie is hijacked, simply logging out of the application will invalidate the cookie.
 
 ### Upgrade Path
 
-First, add a new, nullable `remember_token` of VARCHAR(100), TEXT, or equivalent to your `users` table.
+First, add a new, nullable `remember_token` of VARCHAR\(100\), TEXT, or equivalent to your `users` table.
 
 Next, if you are using the Eloquent authentication driver, update your `User` class with the following three methods:
 
-	public function getRememberToken()
-	{
-		return $this->remember_token;
-	}
+```text
+public function getRememberToken()
+{
+    return $this->remember_token;
+}
 
-	public function setRememberToken($value)
-	{
-		$this->remember_token = $value;
-	}
+public function setRememberToken($value)
+{
+    $this->remember_token = $value;
+}
 
-	public function getRememberTokenName()
-	{
-		return 'remember_token';
-	}
+public function getRememberTokenName()
+{
+    return 'remember_token';
+}
+```
 
 > **Note:** All existing "remember me" sessions will be invalidated by this change, so all users will be forced to re-authenticate with your application.
 
@@ -91,13 +98,14 @@ Next, if you are using the Eloquent authentication driver, update your `User` cl
 
 Two new methods were added to the `Illuminate\Auth\UserProviderInterface` interface. Sample implementations may be found in the default drivers:
 
-	public function retrieveByToken($identifier, $token);
+```text
+public function retrieveByToken($identifier, $token);
 
-	public function updateRememberToken(UserInterface $user, $token);
+public function updateRememberToken(UserInterface $user, $token);
+```
 
 The `Illuminate\Auth\UserInterface` also received the three new methods described in the "Upgrade Path".
 
-<a name="upgrade-4.1"></a>
 ## Upgrading To 4.1 From 4.0
 
 ### Upgrading Your Composer Dependency
@@ -120,11 +128,13 @@ Add the new `expire_on_close` configuration option to your `app/config/session.p
 
 Add the new `failed` configuration section to your `app/config/queue.php` file. Here are the default values for the section:
 
-	'failed' => array(
-		'database' => 'mysql', 'table' => 'failed_jobs',
-	),
+```text
+'failed' => array(
+    'database' => 'mysql', 'table' => 'failed_jobs',
+),
+```
 
-**(Optional)** Update the `pagination` configuration option in your `app/config/view.php` file to `pagination::slider-3`.
+**\(Optional\)** Update the `pagination` configuration option in your `app/config/view.php` file to `pagination::slider-3`.
 
 ### Controller Updates
 
@@ -132,13 +142,13 @@ If `app/controllers/BaseController.php` has a `use` statement at the top, change
 
 ### Password Reminders Updates
 
-Password reminders have been overhauled for greater flexibility. You may examine the new stub controller by running the `php artisan auth:reminders-controller` Artisan command. You may also browse the [updated documentation](/docs/security#password-reminders-and-reset) and update your application accordingly.
+Password reminders have been overhauled for greater flexibility. You may examine the new stub controller by running the `php artisan auth:reminders-controller` Artisan command. You may also browse the [updated documentation](https://github.com/bryantyan/laravel4.2docs/tree/f12ffb53f9f16c3968c58e9dd508247dc98deb70/docs/security/README.md#password-reminders-and-reset) and update your application accordingly.
 
 Update your `app/lang/en/reminders.php` language file to match [this updated file](https://github.com/laravel/laravel/blob/master/app/lang/en/reminders.php).
 
 ### Environment Detection Updates
 
-For security reasons, URL domains may no longer be used to detect your application environment. These values are easily spoofable and allow attackers to modify the environment for a request. You should convert your environment detection to use machine host names (`hostname` command on Mac, Linux, and Windows).
+For security reasons, URL domains may no longer be used to detect your application environment. These values are easily spoofable and allow attackers to modify the environment for a request. You should convert your environment detection to use machine host names \(`hostname` command on Mac, Linux, and Windows\).
 
 ### Simpler Log Files
 
@@ -161,3 +171,4 @@ Once you have completed the changes above, you can run the `composer update` fun
 ### Wildcard Event Listeners
 
 The wildcard event listeners no longer append the event to your handler functions parameters. If you require finding the event that was fired you should use `Event::firing()`.
+

@@ -1,6 +1,6 @@
 # Laravel 4.2 中文文档
 
->Laravel 中文文档线上地址：http://v4.golaravel.com/docs/4.2
+> Laravel 中文文档线上地址：[http://v4.golaravel.com/docs/4.2](http://v4.golaravel.com/docs/4.2)
 
 ## 如何参与翻译
 
@@ -10,31 +10,27 @@
 
 ## Laravel 4.2 中文文档翻译任务分配表
 
-- 王赛
-    - [x] artisan.md
-    - [x] documentation.md
-    - [x] installation.md
-    - [x] introduction.md
-
-- 何文祥
-    - [ ] quick.md
-
-- 孤客漫步
-    - [x] releases.md
-    - [ ] upgrade.md
-    - [x] homestead.md
-    - [x] lifecycle.md
-    - [ ] routing.md
-
-- 成武
-    - [x] configuration.md
-
-- mpandar
-    - [ ] packages.md
-
+* 王赛
+  * [x] artisan.md
+  * [x] documentation.md
+  * [x] installation.md
+  * [x] introduction.md
+* 何文祥
+  * [ ] quick.md
+* 孤客漫步
+  * [x] releases.md
+  * [ ] upgrade.md
+  * [x] homestead.md
+  * [x] lifecycle.md
+  * [ ] routing.md
+* 成武
+  * [x] configuration.md
+* mpandar
+  * [ ] packages.md
 
 ## 版权协议
 
 所有中文文档遵循 [CC BY 3.0](http://creativecommons.org/licenses/by/3.0/) 协议。对于任何形式的使用，请保留译者的署名、网址、联系方式等信息。
 
 原始英文文档所遵循的版权协议请参考[Laravel Docs](https://github.com/laravel/docs)。
+
