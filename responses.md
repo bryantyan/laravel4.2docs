@@ -104,7 +104,7 @@ Views typically contain the HTML of your application and provide a convenient wa
 
 A simple view could look something like this:
 
-## Hello, 
+## Hello,
 
 This view may be returned to the browser like so:
 

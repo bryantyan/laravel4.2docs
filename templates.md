@@ -36,7 +36,7 @@ Blade is a simple, yet powerful templating engine provided with Laravel. Unlike 
 
 ### Defining A Blade Layout
 
- @section\('sidebar'\) This is the master sidebar. @show @yield\('content'\)
+@section\('sidebar'\) This is the master sidebar. @show @yield\('content'\)
 
 ### Using A Blade Layout
 

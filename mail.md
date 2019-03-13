@@ -97,11 +97,11 @@ Embedding inline images into your e-mails is typically cumbersome; however, Lara
 
 #### Embedding An Image In An E-Mail View
 
- Here is an image: ![](https://github.com/bryantyan/laravel4.2docs/tree/f12ffb53f9f16c3968c58e9dd508247dc98deb70/%3C?php%20echo%20$message-%3Eembed%28$pathToFile%29;%20?%3E)
+Here is an image: ![](https://github.com/bryantyan/laravel4.2docs/tree/f12ffb53f9f16c3968c58e9dd508247dc98deb70/<?php%20echo%20$message->embed%28$pathToFile%29;%20?>)
 
 #### Embedding Raw Data In An E-Mail View
 
- Here is an image from raw data: ![](https://github.com/bryantyan/laravel4.2docs/tree/f12ffb53f9f16c3968c58e9dd508247dc98deb70/%3C?php%20echo%20$message-%3EembedData%28$data,%20$name%29;%20?%3E)
+Here is an image from raw data: ![](https://github.com/bryantyan/laravel4.2docs/tree/f12ffb53f9f16c3968c58e9dd508247dc98deb70/<?php%20echo%20$message->embedData%28$data,%20$name%29;%20?>)
 
 Note that the `$message` variable is always passed to e-mail views by the `Mail` class.
 

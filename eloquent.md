@@ -1411,7 +1411,7 @@ Alternatively, you may use the `visible` property to define a white-list:
 protected $visible = array('first_name', 'last_name');
 ```
 
- Occasionally, you may need to add array attributes that do not have a corresponding column in your database. To do so, simply define an accessor for the value:
+Occasionally, you may need to add array attributes that do not have a corresponding column in your database. To do so, simply define an accessor for the value:
 
 ```text
 public function getIsAdminAttribute()

@@ -72,7 +72,7 @@ Next, we'll create a simple view to display our user data. Views live in the `ap
 
 ## Laravel Quickstart
 
- @yield\('content'\)
+@yield\('content'\)
 
 Next, we'll create our `users.blade.php` view:
 
